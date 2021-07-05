@@ -9,12 +9,16 @@ const Statistics = ({ good, neutral, bad }) => {
   if (all > 0) {
     return (
       <div>
+        <table>
+          <tbody>
         <StatisticLine name='good' value={good} />
         <StatisticLine name='neutral' value={neutral} />
         <StatisticLine name='bad' value={bad} />
         <StatisticLine name='all' value={all} />
-        <StatisticLine name='average' value={avg} />
-        <StatisticLine name='positive' value={positive + " %"} />
+        <StatisticLine name='average' value={avg.toFixed(1)} />
+        <StatisticLine name='positive' value={positive.toFixed(1) + " %"} />
+          </tbody>
+        </table>
       </div>
     )
   }
@@ -27,9 +31,10 @@ const Statistics = ({ good, neutral, bad }) => {
 }
 
 const StatisticLine = ({ name, value }) => (
-      <div>
-        {name} {value}
-      </div>
+      <tr>
+        <td>{name}</td>
+        <td>{value}</td>
+      </tr>
 )
   
 const Button = ({clickHandler, text}) => (
