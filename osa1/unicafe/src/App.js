@@ -1,22 +1,21 @@
 import React, { useState } from "react"
 
 const Statistics = ({ good, neutral, bad }) => {
-
   const all = good + bad + neutral
   const avg = (good + (bad * -1)) / all
   const positive = good / (good + neutral + bad) * 100
-  
+
   if (all > 0) {
     return (
       <div>
         <table>
           <tbody>
-        <StatisticLine name='good' value={good} />
-        <StatisticLine name='neutral' value={neutral} />
-        <StatisticLine name='bad' value={bad} />
-        <StatisticLine name='all' value={all} />
-        <StatisticLine name='average' value={avg.toFixed(1)} />
-        <StatisticLine name='positive' value={positive.toFixed(1) + " %"} />
+            <StatisticLine name='good' value={good} />
+            <StatisticLine name='neutral' value={neutral} />
+            <StatisticLine name='bad' value={bad} />
+            <StatisticLine name='all' value={all} />
+            <StatisticLine name='average' value={avg.toFixed(1)} />
+            <StatisticLine name='positive' value={positive.toFixed(1) + " %"} />
           </tbody>
         </table>
       </div>
@@ -40,7 +39,6 @@ const StatisticLine = ({ name, value }) => (
 const Button = ({clickHandler, text}) => (
     <button onClick={clickHandler}>{text}</button>
   )
-
 
 const Header = ({ text }) => (
   <h1>{text}</h1>
