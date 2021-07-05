@@ -1,29 +1,34 @@
 import React, { useState } from "react"
 
-const DisplayStat = (props) => {
+const Statistics = ({ good, neutral, bad }) => {
+  const all = good + bad + neutral
+  const avg = (good + (bad * -1)) / all
+  const positive = good / (good + neutral + bad) * 100
+  
   return (
     <div>
-      {props.name} {props.value}
+      <DisplayStat name='good' value={good} />
+      <DisplayStat name='neutral' value={neutral} />
+      <DisplayStat name='bad' value={bad} />
+      <DisplayStat name='all' value={all} />
+      <DisplayStat name='average' value={avg} />
+      <DisplayStat name='positive' value={positive + " %"} />
     </div>
   )
 }
 
-const DisplayAvg = ({good, neutral, bad}) => {
-  const total = good + neutral + bad
-  const score = good + (bad * -1)
-  const avg = score/total
+const DisplayStat = ({name, value}) => {
   return (
     <div>
-      average {avg}
+      {name} {value}
     </div>
   )
 }
 
-const Button = (props) => {
-  return (
-    <button onClick={props.clickHandler}>{props.text}</button>
+const Button = ({clickHandler, text}) => (
+    <button onClick={clickHandler}>{text}</button>
   )
-}
+
 
 const Header = ({ text }) => (
   <h1>{text}</h1>
@@ -46,13 +51,7 @@ const App = () => {
       <Button clickHandler={badClickHandler} text="bad" />
 
       <Header text="statistics" />
-      
-      <DisplayStat name="good" value={good} />
-      <DisplayStat name="neutral" value={neutral} />
-      <DisplayStat name="bad" value={bad} />
-      <DisplayStat name="all" value={good + neutral + bad} />
-      <DisplayAvg name="average" good={good} neutral={neutral} bad={bad} />
-      <DisplayStat name="positive" value={good / (good + neutral + bad) * 100}/>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
