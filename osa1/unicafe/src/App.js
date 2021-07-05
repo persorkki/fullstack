@@ -1,30 +1,37 @@
 import React, { useState } from "react"
 
 const Statistics = ({ good, neutral, bad }) => {
+
   const all = good + bad + neutral
   const avg = (good + (bad * -1)) / all
   const positive = good / (good + neutral + bad) * 100
   
+  if (all > 0) {
+    return (
+      <div>
+        <DisplayStat name='good' value={good} />
+        <DisplayStat name='neutral' value={neutral} />
+        <DisplayStat name='bad' value={bad} />
+        <DisplayStat name='all' value={all} />
+        <DisplayStat name='average' value={avg} />
+        <DisplayStat name='positive' value={positive + " %"} />
+      </div>
+    )
+  }
+  
   return (
     <div>
-      <DisplayStat name='good' value={good} />
-      <DisplayStat name='neutral' value={neutral} />
-      <DisplayStat name='bad' value={bad} />
-      <DisplayStat name='all' value={all} />
-      <DisplayStat name='average' value={avg} />
-      <DisplayStat name='positive' value={positive + " %"} />
+      no feedback given
     </div>
   )
 }
 
-const DisplayStat = ({name, value}) => {
-  return (
-    <div>
-      {name} {value}
-    </div>
-  )
-}
-
+const DisplayStat = ({ name, value }) => (
+      <div>
+        {name} {value}
+      </div>
+)
+  
 const Button = ({clickHandler, text}) => (
     <button onClick={clickHandler}>{text}</button>
   )
