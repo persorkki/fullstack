@@ -13,6 +13,10 @@ const Button = (props) => {
   )
 }
 
+const Header = ({ text }) => (
+  <h1>{text}</h1>
+)
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -24,11 +28,12 @@ const App = () => {
   
   return (
     <div>
-      <h1>give feedback</h1>
+      <Header text="give feedback"/>
       <Button clickHandler={goodClickHandler} text="good" />
       <Button clickHandler={neutralClickHandler} text="neutral" />
       <Button clickHandler={badClickHandler} text="bad" />
-      <h1>statistics</h1>
+      
+      <Header text="statistics"/>
       <DisplayStat name="good" value={good} />
       <DisplayStat name="neutral" value={neutral} />
       <DisplayStat name="bad" value={bad}/>
