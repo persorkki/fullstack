@@ -9,16 +9,16 @@ const Statistics = ({ good, neutral, bad }) => {
   if (all > 0) {
     return (
       <div>
-        <DisplayStat name='good' value={good} />
-        <DisplayStat name='neutral' value={neutral} />
-        <DisplayStat name='bad' value={bad} />
-        <DisplayStat name='all' value={all} />
-        <DisplayStat name='average' value={avg} />
-        <DisplayStat name='positive' value={positive + " %"} />
+        <StatisticLine name='good' value={good} />
+        <StatisticLine name='neutral' value={neutral} />
+        <StatisticLine name='bad' value={bad} />
+        <StatisticLine name='all' value={all} />
+        <StatisticLine name='average' value={avg} />
+        <StatisticLine name='positive' value={positive + " %"} />
       </div>
     )
   }
-  
+
   return (
     <div>
       no feedback given
@@ -26,7 +26,7 @@ const Statistics = ({ good, neutral, bad }) => {
   )
 }
 
-const DisplayStat = ({ name, value }) => (
+const StatisticLine = ({ name, value }) => (
       <div>
         {name} {value}
       </div>
