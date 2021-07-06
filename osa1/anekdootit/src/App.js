@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Button = ({ clickHandler, text }) => (
   <button onClick={clickHandler}>{text}</button>
@@ -34,12 +34,13 @@ const App = () => {
   const [highestIndex, setHighestIndex] = useState(0)
 
   const randomClick = () => setSelected(Math.floor(Math.random() * anecdotes.length))
+
   const voteClick = () => {
     const copy = {...points}
     copy[selected] += 1
     setPoints(copy)  
   }
-
+  
   //took longer to figure out than it should have
   useEffect(() => {
     if (points[selected] > points[highestIndex])
