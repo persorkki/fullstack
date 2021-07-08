@@ -30,10 +30,10 @@ const Content = ({ parts }) => {
 }
 
 //Total tehtävien yhteismäärästä.
-const Total = (props) => {
+const Total = ({ parts }) => {
   return (
-    <div>  
-    <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
+    <div>
+      <strong><p>total of { parts.reduce((sum, part) => part.exercises + sum, 0) } exercises</p></strong>
     </div>
   )
 }
@@ -43,7 +43,7 @@ const Course = ({ course }) => {
     <div>
       <Header course={course.name}/>
       <Content parts={course.parts}/>
-      {/*<Total parts={course.parts} />*/}
+      <Total parts={course.parts} />
     </div>
   )
 }
@@ -67,6 +67,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },    
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
