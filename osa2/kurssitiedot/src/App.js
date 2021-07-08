@@ -1,50 +1,5 @@
 import React from 'react'
-
-
-//Header huolehtii kurssin nimen renderöimisestä
-const Header = ({course}) => {
-  return (
-    <div>
-      <h1>{course}</h1>
-    </div>
-  )
-}
-
-const Part = ({part, exercise}) => {
-  return (
-    <>
-     <p>{part} {exercise}</p>
-    </>
-  )
-}
-
-//Content osista ja niiden tehtävämääristä 
-const Content = ({ parts }) => {
-  return (
-    <div>
-      { parts.map((part) => <Part key={part.id} part={part.name} exercise={part.exercises} />) }
-    </div>
-  )
-}
-
-//Total tehtävien yhteismäärästä.
-const Total = ({ parts }) => {
-  return (
-    <div>
-      <strong><p>total of { parts.reduce((sum, part) => part.exercises + sum, 0) } exercises</p></strong>
-    </div>
-  )
-}
-
-const Course = ({ course }) => {
-  return (
-    <div>
-      <Header course={course.name}/>
-      <Content parts={course.parts}/>
-      <Total parts={course.parts} />
-    </div>
-  )
-}
+import Course from './components/Course'
 
 const App = () => {
   const courses = [
@@ -73,7 +28,7 @@ const App = () => {
           id: 4
         }
       ]
-    }, 
+    },
     {
       name: 'Node.js',
       id: 2,
@@ -93,7 +48,7 @@ const App = () => {
   ]
   return (
     <div>
-      {courses.map((course) => <Course course={course} /> )}
+      {courses.map((course) => <Course key={course.id} course={course} />)}
     </div>
   )
 }
