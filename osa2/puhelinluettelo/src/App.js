@@ -6,14 +6,18 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
   
-  const handleInputChange = (p) =>
+  const handleInputChange = (e) =>
   {
-    setNewName(p.target.value)
+    setNewName(e.target.value)
   }
 
-  const addNewNumber = (p) =>
+  //[Violation] 'submit' handler took 2702ms?
+  const addNewNumber = (e) =>
   {
-    p.preventDefault()
+    e.preventDefault()
+    if (persons.filter(x => x.name === newName).length > 0)
+      return window.alert(`${newName} is already added to the phonebook`)
+  
     const personObject = {
       name: newName
     }
