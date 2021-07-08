@@ -22,9 +22,7 @@ const Part = ({part, exercise}) => {
 const Content = ({ parts }) => {
   return (
     <div>
-      {parts.map(function (part) {
-        return <Part key={part.id} part={part.name} exercise={part.exercises} />
-      })}
+      { parts.map((part) => <Part key={part.id} part={part.name} exercise={part.exercises} />) }
     </div>
   )
 }
