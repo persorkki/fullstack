@@ -15,4 +15,5 @@ const Person = ({ person }) => {
     </li>
     )
 }
+
 export default Persons
