@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -12,10 +15,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   
-  const handleNameChange = (e) => setNewName(e.target.value)
-  const handleNumberChange = (e) => setNewNumber(e.target.value)
-  const handleFilterChange = (e) => {
-    setNewFilter(e.target.value)
+  //reusing this was not the code save I was hoping for
+  const handleInputChange = (e, set) => {
+    set(e.target.value)
   }
 
   const addNewNumber = (e) =>
@@ -39,19 +41,23 @@ const App = () => {
   
   return (
     <div>
+
       <h2>Phonebook</h2>
-      <div>filter shown <input value={newFilter} onChange={handleFilterChange} /></div>
-      <h2>add a new number</h2>
-      <form onSubmit={addNewNumber}>
-        
-        <div>name: <input value={newName} onChange={handleNameChange} /></div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange}/></div>
-        <div><button type="submit">add</button></div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        { filtered.map(person => <li key={person.name}>{person.name} {person.number}</li>) }
-      </ul>
+      <Filter newFilter={newFilter} handleInputChange={handleInputChange} setNewFilter={setNewFilter} />
+
+      <h3>Add a new</h3>
+      {/*probably a horrible way to do this,sorry*/}
+      <PersonForm
+        addNewNumber={addNewNumber}
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+        handleInputChange={handleInputChange} />
+      
+      <h3>Numbers</h3>
+      <Persons persons={filtered} />
+      
     </div>
   )
 }
