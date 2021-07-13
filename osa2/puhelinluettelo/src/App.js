@@ -38,6 +38,11 @@ const App = () => {
     if (persons.filter(x => x.name === newName || x.number === newNumber).length > 0) {
       return window.alert(`${newName} is already added to the phonebook`)
     }
+    
+    //uuden numeron lisäys palvelimelle
+    axios
+      .post('http://localhost:3001/persons/', personObject)
+      .then(res => console.log(res))
     setPersons(persons.concat(personObject))
     setNewName('')
     setNewNumber('')
