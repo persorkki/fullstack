@@ -1,34 +1,9 @@
 {
   "persons": [
     {
-      "name": "abab",
-      "number": "hei",
-      "id": "abab_1626225510462"
-    },
-    {
-      "name": "ababa",
-      "number": "2424",
-      "id": "ababa_1626225523857"
-    },
-    {
-      "name": "aaaaa",
-      "number": "3334",
-      "id": "aaaaa_1626226781176"
-    },
-    {
-      "name": "addd",
-      "number": "ceee",
-      "id": "addd_1626226946499"
-    },
-    {
-      "name": "aaa",
-      "number": "33aaaaaaaaaaaa",
-      "id": "aaa_1626227108018"
-    },
-    {
-      "name": "aaaa",
-      "number": "aaa",
-      "id": "aaaa_1626227828946"
+      "name": "asdasda",
+      "number": "adasd",
+      "id": "asdasda_1626232650466"
     }
   ]
 }

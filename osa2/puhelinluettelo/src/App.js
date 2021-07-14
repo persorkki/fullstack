@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 
 /* services */
 import personService from './services/person'
@@ -16,9 +17,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [filtered, setFiltered] = useState([])
-  
-  //reusing this was not the code save I was hoping for, FIX?
-  //TODO: FIX
+  const [infoText, setInfoText] = useState(null)
+  const [isError, setIsError] = useState(false)
+
   const handleInputChange = (event, setState) => {
     setState(event.target.value)
   }
@@ -39,18 +40,17 @@ const App = () => {
         personService
           .update(findPerson.id, personObject)
           .then(() => {
-            let updated = [...persons]
-            const index = updated.findIndex(x => x.name === newName)
-
-            //otetaan vanha id talteen koska luomme aina uuden ylempänä
-            personObject.id = persons[index].id
-
-            updated[index] = personObject
-            //tämä pitäisi hakea serveriltä uudestaan, mutta loputon useEffect looppi estää
-            //personsin automaattisen päivittämisen
-            //korjaa myöhemmin ehkä
-            setPersons(updated)
+            infoSetter(`Updated ${newName}`)
+            updateList()
           })
+          .catch(error => {
+            setIsError(true)
+            infoSetter(`${newName} does not exist anymore on the server`)
+            updateList()
+          })
+      }
+      else {
+        infoSetter(`No action was taken`)
       }
       return
     }
@@ -58,36 +58,66 @@ const App = () => {
       .create(personObject)
       .then(() =>
         setPersons(persons.concat(personObject))
-      )
+    )
+    infoSetter(`Added ${newName}`)
     setNewName('')
     setNewNumber('')
   }
   
+  const updateList = () => {
+    personService
+      .getAll()
+      .then(response => setPersons(response))
+      .catch(error => {
+        setIsError(true)
+        setInfoText(`error fetching the list`)
+      })
+  }
+
   //haetaan uusi lista kerran
   useEffect(() => {
     personService
-      .getAll()
-      .then(response => {
-        setPersons(response)
-      })
+    .getAll()
+    .then(response => setPersons(response))
+      .catch(error => {
+        setIsError(true)
+        setInfoText(`error fetching the list`)
+    })
   }, [])
 
   useEffect(() => {
     setFiltered(persons.filter(x => x.name.toLowerCase().includes(newFilter.toLowerCase())))
   }, [newFilter, persons])
 
+  //vähennetään duplikaatiota
+  const infoSetter = (message) => {
+    setInfoText(message)
+    setTimeout(() => {
+      setInfoText(null)
+      setIsError(false)
+    }, 3000)
+  }
+
   const personDeleteHandler = (id, name) => {
     if (window.confirm(`really delete ${name}?`)) {
       personService
         .deletePerson(id)
-        //pitäisiköhän tämä hakea serveriltä uudestaan deletoinnin jälkeen?
-        .then(setPersons(persons.filter(p => p.id !== id)))
-        .catch(error => console.log(error.content))
+        //pitäisiköhän tämä oikeastaan hakea serveriltä uudestaan deletoinnin jälkeen?
+        //no jostain syystä tämä nyt ainut tapa jolla toimii
+        /*.then(setPersons(persons.filter(p => p.id !== id)))*/
+        .then(() => updateList())
+        .catch(error => { 
+          setIsError(true)
+          setInfoText(`${name} was already deleted from the server`)
+          updateList()
+        })
+      infoSetter(`Deleted ${name}`)
     }
   }
 
   return (
     <div>
+      <Notification message={infoText} isError={isError} />
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} handleInputChange={handleInputChange} setNewFilter={setNewFilter} />
       <h3>Add a new</h3>
