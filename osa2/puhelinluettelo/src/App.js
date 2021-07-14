@@ -32,8 +32,12 @@ const App = () => {
       //uniikkeja id:tä jotenkin
       id: newName + "_" + Date.now()
     }
-    
-    //ilmoitetaan virhe ja palataan jos numero tai nimi ei ole uniikki
+
+    /* tarkastetaan onko uusi nimi jo listassa.
+       jos kyllä, niin tarkistetaan haluaako käyttäjä vaihtaa numeron uuteen. 
+       jos ei, niin palataan takaisin
+       jos nimeä ei ole listassa, lisätään se sinne */
+
     const findPerson = persons.find(x => x.name === newName)
     if (findPerson !== undefined) {
       if (window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`)) {
@@ -58,12 +62,12 @@ const App = () => {
       .create(personObject)
       .then(() =>
         setPersons(persons.concat(personObject))
-    )
+      )
     infoSetter(`Added ${newName}`)
     setNewName('')
     setNewNumber('')
   }
-  
+
   const updateList = () => {
     personService
       .getAll()
@@ -77,12 +81,12 @@ const App = () => {
   //haetaan uusi lista kerran
   useEffect(() => {
     personService
-    .getAll()
-    .then(response => setPersons(response))
+      .getAll()
+      .then(response => setPersons(response))
       .catch(error => {
         setIsError(true)
         setInfoText(`error fetching the list`)
-    })
+      })
   }, [])
 
   useEffect(() => {
@@ -103,7 +107,7 @@ const App = () => {
       personService
         .deletePerson(id)
         .then(() => updateList())
-        .catch(error => { 
+        .catch(error => {
           setIsError(true)
           setInfoText(`${name} was already deleted from the server`)
           updateList()
@@ -118,7 +122,6 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} handleInputChange={handleInputChange} setNewFilter={setNewFilter} />
       <h3>Add a new</h3>
-      {/*fix*/}
       <PersonForm
         addNewNumber={addNewNumber}
         newName={newName}
