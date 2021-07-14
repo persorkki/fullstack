@@ -102,9 +102,6 @@ const App = () => {
     if (window.confirm(`really delete ${name}?`)) {
       personService
         .deletePerson(id)
-        //pitäisiköhän tämä oikeastaan hakea serveriltä uudestaan deletoinnin jälkeen?
-        //no jostain syystä tämä nyt ainut tapa jolla toimii
-        /*.then(setPersons(persons.filter(p => p.id !== id)))*/
         .then(() => updateList())
         .catch(error => { 
           setIsError(true)
